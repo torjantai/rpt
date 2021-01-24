@@ -2,6 +2,9 @@
 const MULTIPLIER = .9
 
 export const roundDownTo = (minIncrement = 0) => (value: number): number => {
+    if (value < 0) {
+        throw new Error('value must be positive')
+    }
     return minIncrement === 0
         ? value
         : Math.floor(value / minIncrement) * minIncrement

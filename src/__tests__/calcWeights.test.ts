@@ -22,6 +22,11 @@ it('should correctly round down to min increment', () => {
     expect(roundDownToTwoAndHalf(99)).toBe(95)
 })
 
+it('should throw with negative values', () => {
+    const round = roundDownTo(2.5)
+    expect(() => { round(-3) }).toThrow()
+})
+
 it('should correctly calculate weights', () => {
     const start = 100
     const expected = [100, 90, 81]
