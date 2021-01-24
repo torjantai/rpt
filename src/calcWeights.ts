@@ -1,19 +1,25 @@
 
 const MULTIPLIER = .9
 
-type Result = [number, number, number]
-
 export const roundDownTo = (minIncrement = 0) => (value: number): number => {
     return minIncrement === 0
         ? value
         : Math.floor(value / minIncrement) * minIncrement
 }
 
-export const calcWeights = (minIncrement = 1) => (startWeight: number): Result => {
+const calcWeight = (value: number) => (power: number): number => {
+    return value * Math.pow(MULTIPLIER, power)
+}
+
+const calcRounded = (minIncrement: number, startWeight: number) => {
     const roundDownToMinIncrement = roundDownTo(minIncrement);
-    return [
-        roundDownToMinIncrement(startWeight * Math.pow(MULTIPLIER, 0)),
-        roundDownToMinIncrement(startWeight * Math.pow(MULTIPLIER, 1)),
-        roundDownToMinIncrement(startWeight * Math.pow(MULTIPLIER, 2)),
-    ]
+    const calcPower = calcWeight(startWeight)
+    return (power: number): number => {
+        return roundDownToMinIncrement(calcPower(power))
+    }
+}
+
+export const calcWeights = (minIncrement = 1) => (startWeight: number): number[] => {
+    const powers = [0, 1, 2]
+    return powers.map(calcRounded(minIncrement, startWeight))
 }
