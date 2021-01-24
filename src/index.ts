@@ -1,3 +1,11 @@
-const args = process.argv
+import { parseArguments } from './parseArguments'
+import { calcWeights } from './calcWeights'
 
-console.log('asdfasdf')
+const parsedArguments = parseArguments(process.argv)
+
+if (parsedArguments.squat) {
+    const squat = calcWeights(2.5)(parsedArguments.squat)
+    console.log(squat)
+}
+
+
